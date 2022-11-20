@@ -2,25 +2,39 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+commands:
+  configure_bundler:
+    description: Configure bundler
+    steps:
+      - run:
+          name: Configure bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install rake
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  build:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: cimg/ruby:3.1-browsers
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - configure_bundler
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+  rubocop:
+    docker:
+      - image: circleci/ruby:3.1.2-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop -A
+
 workflows:
-  say-hello-workflow:
+  version: 2.1
+  build-and-rubocop:
     jobs:
-      - say-hello
+      - build
+      # - rubocop
