@@ -17,14 +17,14 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:3.1.2
+      - image: circleci/ruby:3.0.0
     steps:
       - checkout
       - configure_bundler
 
   rubocop:
     docker:
-      - image: circleci/ruby:3.1.2-node-browsers-legacy
+      - image: circleci/ruby:3.0.0-node-browsers-legacy
     steps:
       - checkout
       - configure_bundler
