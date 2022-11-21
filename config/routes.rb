@@ -19,6 +19,13 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+  devise_for :users,
+             controllers: {
+              #  :omniauth_callbacks => "users/omniauth_callbacks",
+               omniauth_callbacks: "users/omniauth_callbacks",
+               sessions: "users/sessions",
+               registrations: "users/registrations"
+             }
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
   resources :microposts, only: %i[create destroy]

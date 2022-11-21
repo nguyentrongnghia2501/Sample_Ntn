@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
+  devise :omniauthable, :database_authenticatable, :recoverable, :registerable,
+         :rememberable, :validatable, omniauth_providers: [ :google_oauth2, :facebook]
 
   before_save :downcase_email
   before_create :create_activation_digest
@@ -23,9 +25,20 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   #    has_secure_password khoong duoc dung lan voi devise
-  has_secure_password
+
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   # Returns the hash digest of the given string. Trả về thông báo băm của chuỗi đã cho.
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name # assuming the user model has a name
+      # user.avatar_url = auth.info.image # assuming the user model has an image
+      # If you are using confirmable and the provider(s) you use validate emails,
+      # uncomment the line below to skip the confirmation emails.
+      # user.skip_confirmation!
+    end
+  end
   class << self
     def digest(string)
       cost = if ActiveModel::SecurePassword.min_cost
