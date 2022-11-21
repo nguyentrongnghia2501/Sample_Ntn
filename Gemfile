@@ -86,3 +86,13 @@ group :test do
 end
 gem 'devise'
 gem 'dotenv-rails'
+ gem 'omniauth'
+ gem 'omniauth-google-oauth2'
+ gem "omniauth-rails_csrf_protection", "~> 1.0"
+ gem 'omniauth-facebook'
+ gem 'pry-rails'
+ gem "figaro"
+ gem 'activerecord-session_store'
+ gem 'cancancan'
+ gem "private_pub"
+ gem "thin"
