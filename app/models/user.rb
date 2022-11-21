@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
   devise :omniauthable, :database_authenticatable, :recoverable, :registerable,
-         :rememberable, :validatable, omniauth_providers: [ :google_oauth2, :facebook]
+         :rememberable,  :trackable, :validatable, omniauth_providers: [ :google_oauth2, :facebook]
 
   before_save :downcase_email
   before_create :create_activation_digest

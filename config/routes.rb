@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'comments/new'
+  get 'comments/edit'
+  get 'comments/create'
   get 'password_resets/new'
   get 'password_resets/edit'
   get 'sessions/new'
@@ -26,8 +29,11 @@ Rails.application.routes.draw do
                sessions: "users/sessions",
                registrations: "users/registrations"
              }
+
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
   resources :microposts, only: %i[create destroy]
+  resources :comments
+
   resources :relationships, only: %i[create destroy]
 end
