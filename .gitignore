@@ -16,8 +16,6 @@
 /tmp/*
 
 # Ignore pidfiles, but keep the directory.
-/tmp/pids/*
-
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
