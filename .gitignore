@@ -14,11 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-
-
 # Ignore pidfiles, but keep the directory.
-
-
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
