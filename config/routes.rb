@@ -24,10 +24,10 @@ Rails.application.routes.draw do
   end
   devise_for :users,
              controllers: {
-              #  :omniauth_callbacks => "users/omniauth_callbacks",
-               omniauth_callbacks: "users/omniauth_callbacks",
-               sessions: "users/sessions",
-               registrations: "users/registrations"
+               #  :omniauth_callbacks => "users/omniauth_callbacks",
+               omniauth_callbacks: 'users/omniauth_callbacks',
+               sessions: 'users/sessions',
+               registrations: 'users/registrations'
              }
 
   resources :account_activations, only: [:edit]

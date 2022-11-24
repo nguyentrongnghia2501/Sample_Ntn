@@ -84,15 +84,20 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+gem 'activerecord-session_store'
+gem 'cancancan'
 gem 'devise'
 gem 'dotenv-rails'
- gem 'omniauth'
- gem 'omniauth-google-oauth2'
- gem "omniauth-rails_csrf_protection", "~> 1.0"
- gem 'omniauth-facebook'
- gem 'pry-rails'
- gem "figaro"
- gem 'activerecord-session_store'
- gem 'cancancan'
- gem "private_pub"
- gem "thin"
+gem 'figaro'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
+gem 'private_pub'
+gem 'pry-rails'
+gem 'rubocop'
+gem 'rubocop-discourse'
+gem 'rubocop-performance'
+gem 'rubocop-rails'
+gem 'thin'
+gem 'turbo-rails'
