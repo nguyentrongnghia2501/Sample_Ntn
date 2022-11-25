@@ -16,11 +16,13 @@
         <br>
         <h5>Comment :</h5>
         <%= @comment = micropost.comments %>
-        <span id="comment-<%= micropost.id %>">
+        <div id ="comments">
+          <span id="comment-<%= micropost.id %>">
                 <%= render @comment %>
-        </span>
+          </span>
+        </div>
         <span id="form">
-          <%= form_for Comment.new , remote: true do |f| %>
+          <%= form_for Comment.new ,remote: true do |f| %>
                  <%= render 'shared/error_messages', object: f.object %>
                    <div class="field">
                      <%= f.hidden_field :micropost_id, value: micropost.id %>
