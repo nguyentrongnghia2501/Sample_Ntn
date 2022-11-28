@@ -3,6 +3,7 @@
 # Service to download ftp files from the server
 class CommentsController < ApplicationController
   respond_to :html, :json
+  before_action :correct_user, only: :destroy
   def new
     @comment = Comment.new
     @parent = Comment.find_by(id: params[:post_parent_id])
@@ -33,22 +34,28 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find_by(id: params[:id])
     @comment.destroy
     respond_to do |format|
       format.html { redirect_to comment_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
       format.js   { render layout: false }
     end
+
   end
+
 
   private
 
   def comment_params
     params.require(:comment).permit :micropost_id, :user_id, :body, :post_parent_id, :image
   end
-
-  def set_current_user
-    @current_user = current_user
+  def correct_user
+     @comment = Comment.find_by(id: params[:id])
+     if @comment.user
+       redirect_to root_url, :alert => "You are not allowed" unless current_user.admin? || @comment.user == current_user
+     else
+       redirect_to root_url, :alert => "You are not allowed" unless current_user.admin?
+     end
   end
+
 end
