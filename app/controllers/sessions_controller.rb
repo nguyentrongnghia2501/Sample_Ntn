@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   def create # rubocop:disable Metrics/MethodLength
     user = User.find_by(email: params[:session][:email].downcase)
     #  binding.pry
-    if user&.authenticate(params[:session][:password])
+    if user&.valid_password?(params[:session][:password])
       # Log the user in and redirect to the user's show page.
       if user.activated?
         forwarding_url = session[:forwarding_url]

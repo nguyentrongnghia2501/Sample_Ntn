@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Service to download ftp files from the server
 class User < ApplicationRecord
   # Include default devise modules. Others available are:xx
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -14,14 +15,15 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
+
   devise :omniauthable, :database_authenticatable, :recoverable, :registerable,
-         :rememberable, :validatable, omniauth_providers: [ :google_oauth2, :facebook]
+         :rememberable, :trackable, :validatable, omniauth_providers: %i[google_oauth2 facebook]
 
   before_save :downcase_email
   before_create :create_activation_digest
   before_save { email.downcase } # Dam bao tinh only
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   #    has_secure_password khoong duoc dung lan voi devise
