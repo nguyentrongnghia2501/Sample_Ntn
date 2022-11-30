@@ -1,26 +1,31 @@
 <li id="micropost-<%= micropost.id %>">
-  <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+    <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+        <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
   <span class="content">
     <%= micropost.content %>
     <%= image_tag micropost.image if micropost.image.attached? %>
   </span>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+    <% if current_user %>
+     <%= content_tag "div", id: "like_link-#{micropost.id}" do %>
+       <%= render 'microposts/like_link', micropost: micropost %>
+     <% end %>
+   <% end %>
     <% if current_user?(micropost.user) %>
       <%= button_to "delete", micropost, method: :delete,
       data: { confirm: "You sure?" } %>
     <% end %>
+        Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </span>
-          <!--  -->
-  <br>
-  <h5>Comment :</h5>
-  <%= @comment = micropost.comments %>
-  <div id="comments">
-    <span id="comment-<%= micropost.id %>">
+        <!--  -->
+        <br>
+        <h5>Comment :</h5>
+        <%= @comment = micropost.comments %>
+            <div id="comments">
+                <span id="comment-<%= micropost.id %>">
       <%= render @comment %>
     </span>
-  </div>
+            </div>
   <span id="form">
     <%= form_for Comment.new ,remote: true do |f| %>
       <%= render 'shared/error_messages', object: f.object %>

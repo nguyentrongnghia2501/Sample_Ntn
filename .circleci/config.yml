@@ -17,7 +17,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:3.1-browsers
+      - image: cimg/ruby:3.1.2
     steps:
       - checkout
       - configure_bundler

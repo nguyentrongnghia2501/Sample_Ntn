@@ -1,0 +1,21 @@
+<%= link_to like_micropost_path(micropost), method: :patch, remote: true, id: "like-link-#{micropost.id}" do %>
+<% if current_user.voted_up_on?(micropost) %>
+  UNLIKE
+  <b>
+    <%= micropost.cached_votes_score %>
+  </b>
+
+<% elsif current_user.voted_down_on?(micropost) %>
+  LIKE
+  <b>
+    <%= micropost.cached_votes_up %>
+  </b>
+
+<% else %>
+  LIKE
+  <b>
+    <%= micropost.cached_votes_score %>
+  </b>
+
+<% end %>
+<% end %>
