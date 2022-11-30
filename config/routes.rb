@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'votes/create'
+  get 'votes/destroy'
   get 'comments/new'
   get 'comments/edit'
   get 'comments/create'
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
     end
+
   end
   devise_for :users,
              controllers: {
@@ -29,11 +32,14 @@ Rails.application.routes.draw do
                sessions: 'users/sessions',
                registrations: 'users/registrations'
              }
-
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
-  resources :microposts, only: %i[create destroy]
+  resources :microposts, only: %i[create destroy] do
+    member do
+      patch "like", to: "microposts#like"
+    end
+  end
   resources :comments
-
   resources :relationships, only: %i[create destroy]
+
 end
