@@ -103,3 +103,5 @@ gem 'thin'
 gem 'turbo-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'acts_as_votable'
+gem "image_processing", "1.9.3"

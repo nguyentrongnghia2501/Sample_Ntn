@@ -333,3 +333,21 @@ span.image {
     height: 50px;
     float: left;
 }
+.emojis {
+  margin-top: 10px;
+}
+.emoji img {
+  padding: 5px;
+}
+
+.emoji.emoji-gray img {
+  filter: grayscale(100%);
+}
+
+.emoji.emoji-gray img:hover {
+  filter: grayscale(0%);
+}
+
+.emoji {
+  position: relative;
+}
