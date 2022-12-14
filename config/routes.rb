@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
   resources :microposts, only: %i[create destroy] do
-    resource :emote, only: :show
+    resource :emote do
+      get :count_emoji
+    end
   end
   resources :comments
 
