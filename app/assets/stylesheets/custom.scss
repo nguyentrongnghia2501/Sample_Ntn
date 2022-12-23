@@ -77,10 +77,6 @@ p {
     text-decoration: none;
 }
 
-img {
-    display: none;
-}
-
 footer {
     margin-top: 45px;
     padding-top: 5px;
@@ -332,4 +328,22 @@ span.image {
     width: 150px;
     height: 50px;
     float: left;
+}
+.emojis {
+  margin-top: 10px;
+}
+.emoji img {
+  padding: 5px;
+}
+
+.emoji.emoji-gray img {
+  filter: grayscale(100%);
+}
+
+.emoji.emoji-gray img:hover {
+  filter: grayscale(0%);
+}
+
+.emoji {
+  position: relative;
 }

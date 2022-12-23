@@ -5,7 +5,18 @@
     <%= micropost.content %>
     <%= image_tag micropost.image if micropost.image.attached? %>
   </span>
-  <span class="timestamp">
+  <span id="emoji" class="timestamp">
+    <!-- emotes -->
+
+    <% Emoji.all.each do |emoji| %>
+      <% size = micropost.emotes_size(emoji[:key]) %>
+      <%= link_to count_emoji_micropost_emote_path(micropost, emote: emoji[:key]), class: "emoji-link" do %>
+        <%= image_tag File.join('emojis', emoji[:key]), size: '25x25', title: emoji[:text] %>
+        <%= content_tag :span, size, class: 'count' %>
+      <% end %>
+    <% end %>
+
+    <!-- end  -->
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     <% if current_user?(micropost.user) %>
       <%= button_to "delete", micropost, method: :delete,
@@ -32,5 +43,4 @@
       <%= f.submit "Comment", class: "btn btn-primary" %>
     <% end %>
   </span>
-
 </li>

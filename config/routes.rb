@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+
   get 'comments/new'
   get 'comments/edit'
   get 'comments/create'
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+
   devise_for :users,
              controllers: {
                #  :omniauth_callbacks => "users/omniauth_callbacks",
@@ -32,7 +34,11 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: [:edit]
   resources :password_resets, only: %i[new create edit update]
-  resources :microposts, only: %i[create destroy]
+  resources :microposts, only: %i[create destroy] do
+    resource :emote do
+      get :count_emoji
+    end
+  end
   resources :comments
 
   resources :relationships, only: %i[create destroy]
