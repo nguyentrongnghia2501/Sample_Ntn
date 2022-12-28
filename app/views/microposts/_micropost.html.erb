@@ -24,6 +24,15 @@
     <% end %>
   </span>
           <!--  -->
+
+
+  notification <%= @unread.count %>
+  <br>
+  <%= @read.each do |notification| %>
+     <%= notification.to_notification.message %>
+
+  <% end %>>
+  <hr>
   <br>
   <h5>Comment :</h5>
   <%= @comment = micropost.comments %>

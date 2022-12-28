@@ -105,3 +105,5 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'acts_as_votable'
 gem "image_processing", "1.9.3"
+
+gem "noticed", "~> 1.6"

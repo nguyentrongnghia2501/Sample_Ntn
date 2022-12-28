@@ -8,4 +8,19 @@ class Comment < ApplicationRecord
   validates :user_id, presence: true
   validates :micropost_id, presence: true
   validates :body, presence: true, allow_blank: false
+  # notifications
+
+  after_create_commit :notify_recipient
+  before_destroy :cleanup_notifications
+  has_noticed_notifications model_name: 'Notification'
+
+
+  private
+
+  def notify_recipient
+    CommentNotification.with(comment: self,micropost: micropost).deliver_later(Micropost.User)
+  end
+  def cleanup_notifications
+    notifications_as_comment.destroy_all
+  end
 end
