@@ -14,6 +14,7 @@ class User < ApplicationRecord
                                    foreign_key: 'followed_id',
                                    dependent: :destroy
   has_many :microposts, dependent: :destroy
+  has_noticed_notifications model_name: "Notification"
   has_many :notifications, as: :recipient, dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower

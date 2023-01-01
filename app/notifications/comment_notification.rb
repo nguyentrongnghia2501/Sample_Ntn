@@ -34,6 +34,6 @@ class CommentNotification < Noticed::Base
   # end
   #
   def url
-    comment_path(Micropost.find(params[:comment][:micropost_id]))
+    micropost_path(Micropost.find(params[:comment][:micropost_id]))
   end
 end

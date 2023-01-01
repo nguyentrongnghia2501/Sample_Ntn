@@ -18,7 +18,7 @@ class Comment < ApplicationRecord
   private
 
   def notify_recipient
-    CommentNotification.with(comment: self,micropost: micropost).deliver_later(Micropost.User)
+    CommentNotification.with(comment: self,micropost: micropost).deliver_later(micropost.user)
   end
   def cleanup_notifications
     notifications_as_comment.destroy_all
