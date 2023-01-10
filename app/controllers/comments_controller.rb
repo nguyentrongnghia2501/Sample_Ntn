@@ -15,6 +15,9 @@ class CommentsController < ApplicationController
     @comment = Comment.create! comment_params
     respond_to do |format|
       if @comment.save
+        ActionCable.server.broadcast("notification_channel",
+          { message: "#{current_user.name} đã bình luận bài viết của bạn " })
+
         format.html { redirect_to @comment, notice: 'comment was successfully created.' }
         format.js   {}
         format.json { render :show, status: :created, location: @comment }

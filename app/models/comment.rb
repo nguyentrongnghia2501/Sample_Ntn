@@ -13,12 +13,15 @@ class Comment < ApplicationRecord
   after_create_commit :notify_recipient
   before_destroy :cleanup_notifications
   has_noticed_notifications model_name: 'Notification'
-
+  after_commit :actions
 
   private
+  def actions
 
+  end  
   def notify_recipient
-    CommentNotification.with(comment: self,micropost: micropost).deliver_later(micropost.user)
+   @noti = CommentNotification.with(comment: self,micropost: micropost).deliver_later(micropost.user)
+    # ActionCable.server.broadcast("notification_channel",{ message: "co thong bao" })
   end
   def cleanup_notifications
     notifications_as_comment.destroy_all

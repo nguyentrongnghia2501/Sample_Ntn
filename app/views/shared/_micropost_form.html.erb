@@ -8,6 +8,13 @@
     <%= f.file_field :image , accept: "image/jpeg,image/gif,image/png"%>
   </span>
 <% end %>
+ <h1> Notification </h1>
+ <div class="notification-list">
+   <ul>
+     <li></li>
+   </ul>
+
+ </div>
 <script type="text/javascript">
     $("#micropost_image").bind("change", function() {
         var size_in_megabytes = this.files[0].size/1024/1024;
