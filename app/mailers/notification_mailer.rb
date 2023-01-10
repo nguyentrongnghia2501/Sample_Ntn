@@ -8,6 +8,6 @@ class NotificationMailer < ApplicationMailer
   def send_email_noticed
     @comment = params[:comment]
 
-    mail(to: params[:comment], subject: "My subject")
+    mail(to: params[:comment], subject: "You have a new message")
   end
 end

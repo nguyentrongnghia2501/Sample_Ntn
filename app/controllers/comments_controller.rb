@@ -17,11 +17,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         ActionCable.server.broadcast("notification_channel",
-          { message: "#{current_user.name} đã bình luận bài viết của bạn " })
-         
-        
-
-        
+          { message: "#{current_user.name} đã bình luận bài viết của bạn " })    
         # CommentMailer.new_comment(user, @comment).deliver_now
         format.html { redirect_to @comment, notice: 'comment was successfully created.' }
         format.js   {}
