@@ -8,14 +8,13 @@ class CommentNotification < Noticed::Base
   #
   deliver_by :database
   deliver_by :action_cable
-  deliver_by :email, mailer: "UserMailer"
+  deliver_by :email, mailer: "NotificationMailer", method: :send_email_noticed
   # deliver_by :slack
   # deliver_by :custom, class: "MyDeliveryMethod"
 
   # Add required params
   #
-  # param :post
-
+  params :comment
   # Define helper methods to make rendering easier.
   #
 

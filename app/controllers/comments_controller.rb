@@ -4,6 +4,7 @@
 class CommentsController < ApplicationController
   respond_to :html, :json
   before_action :correct_user, only: :destroy
+  before_action :logged_in_user, only: %i[create destroy]
   def new
     @comment = Comment.new
     @parent = Comment.find_by(id: params[:post_parent_id])
@@ -17,7 +18,11 @@ class CommentsController < ApplicationController
       if @comment.save
         ActionCable.server.broadcast("notification_channel",
           { message: "#{current_user.name} đã bình luận bài viết của bạn " })
+         
+        
 
+        
+        # CommentMailer.new_comment(user, @comment).deliver_now
         format.html { redirect_to @comment, notice: 'comment was successfully created.' }
         format.js   {}
         format.json { render :show, status: :created, location: @comment }

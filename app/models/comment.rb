@@ -20,7 +20,7 @@ class Comment < ApplicationRecord
 
   end  
   def notify_recipient
-   @noti = CommentNotification.with(comment: self,micropost: micropost).deliver_later(micropost.user)
+    CommentNotification.with(comment: self,micropost: micropost).deliver_later(micropost.user)
     # ActionCable.server.broadcast("notification_channel",{ message: "co thong bao" })
   end
   def cleanup_notifications
