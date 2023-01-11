@@ -1,0 +1,27 @@
+<% if current_user %>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          <i class="fa-regular fa-bell"></i><%= @unread.count >= 9 ? "9+" : @unread.count  %>
+        </span>
+      </a>
+      <ul class="dropdown-menu">
+        <% @unread.each do |notification| %>
+          <%= render "notifications/notification", notification: notification %>
+        <% end %>
+        <% if @read.count > 0 && @unread.count > 0  %>
+          <li><hr class="dropdown-divider"></li>
+        <% elsif @read.count + @unread.count == 0 %>
+          <li class="dropdown-iteam">
+            Không có thông báo nào
+          </li>
+         <% end %>
+        <% @read.each do |notification| %>
+          <%= render "notifications/notification", notification: notification %>
+        <% end %>
+      </ul>
+    </li>
+
+
+<% end %>

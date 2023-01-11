@@ -4,6 +4,14 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i[create destroy]
   before_action :correct_user, only: :destroy
+  def index
+    @micropost = micropost.all
+    @notifications = current_user.notifications.reverse
+    current_user.notifications.mark_as_read!
+  end
+  def show
+    mark_notifications_as_read
+  end
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
@@ -35,5 +43,11 @@ class MicropostsController < ApplicationController
   def correct_user
     @micropost = current_user.microposts.find_by(id: params[:id])
     redirect_to root_url if @micropost.nil?
+  end
+  def mark_notifications_as_read
+    if current_user
+      notifications_to_mark_as_read = @micropost.notifications_as_post.where(recipient: curent_user)
+      notifications_to_mark_as_read.update_all(read_at: time.zone.now)
+    end
   end
 end

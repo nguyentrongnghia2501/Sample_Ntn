@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   get 'comments/new'
   get 'comments/edit'
   get 'comments/create'
@@ -23,6 +22,7 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+    mount ActionCable.server => '/cable'
 
   devise_for :users,
              controllers: {

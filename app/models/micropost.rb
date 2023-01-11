@@ -11,6 +11,10 @@ class Micropost < ApplicationRecord
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png], message: 'must be a valid image format' },
   size: { less_than: 5.megabytes, message: 'should be less than 5MB' }
 
+
+  has_noticed_notifications model_name: 'Notification'
+  has_many :notifications, through: :user ,dependent: :destroy
+  
   # Returns a resized image for display. TRA VE hinh anh da sua doi
   after_destroy_commit do
     broadcast_remove_to self
