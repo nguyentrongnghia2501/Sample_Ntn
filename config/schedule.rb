@@ -18,7 +18,7 @@ set :output, "./log/slack.log"
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
-every 1.minutes do
+every 1.day, at: '3:00 am' do # Mỗi ngày, vào lúc 3 giờ sáng sẽ thực hiện lệnh sau:
   runner 'Micropost.schedule_micropost'
   runner 'User.schedule_user'
   runner 'Comment.schedule_comment'

@@ -7,7 +7,7 @@ class MicropostsController < ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
-    if @micropost.save   
+    if @micropost.save
       flash[:success] = 'Micropost created!'
       redirect_to root_url
     else
@@ -27,14 +27,6 @@ class MicropostsController < ApplicationController
   end
 
   private
-   def markdown_text(micropost)
-    <<~TEXT
-    :white_check_mark: Post guest waiting status
-    *title*: #{micropost.content}
-    
-    TEXT
-  end
-
   def micropost_params
     params.require(:micropost).permit(:content, :image)
   end
