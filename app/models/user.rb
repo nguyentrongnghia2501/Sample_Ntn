@@ -27,9 +27,14 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   #    has_secure_password khoong duoc dung lan voi devise
-
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   # Returns the hash digest of the given string. Trả về thông báo băm của chuỗi đã cho.
+  def self.schedule_user
+    @user_count = User.where("DATE(created_at) = ?", Date.today-1).count
+    client = Slack::Web::Client.new
+    client.auth_test
+    client.chat_postMessage(channel: '#test_rails', text: "có #{@user_count} người đăng ký mới ")
+  end
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -41,6 +46,7 @@ class User < ApplicationRecord
       # user.skip_confirmation!
     end
   end
+
   class << self
     def digest(string)
       cost = if ActiveModel::SecurePassword.min_cost
