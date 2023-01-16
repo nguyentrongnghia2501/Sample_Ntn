@@ -10,15 +10,12 @@ class Micropost < ApplicationRecord
   validates :content, presence: true, length: { maximum: 140 }
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png], message: 'must be a valid image format' },
   size: { less_than: 5.megabytes, message: 'should be less than 5MB' }
-
   def self.schedule_micropost
-        @micropost_count = Micropost.where("DATE(created_at) = ?", Date.today-1).count
-        client = Slack::Web::Client.new
-        client.auth_test
-        client.chat_postMessage(channel: '#test_rails', text: "có #{@micropost_count} bài đăng mới")
+    @micropost_count = Micropost.where("DATE(created_at) = ?", Date.today-1).count
+    client = Slack::Web::Client.new
+    client.auth_test
+    client.chat_postMessage(channel: '#test_rails', text: "có #{@micropost_count} bài đăng mới")
   end
-
-  
   # Returns a resized image for display. TRA VE hinh anh da sua doi
   after_destroy_commit do
     broadcast_remove_to self

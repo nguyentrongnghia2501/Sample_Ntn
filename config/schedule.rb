@@ -24,5 +24,4 @@ every 1.day, at: '3:00 am' do # Mỗi ngày, vào lúc 3 giờ sáng sẽ thực
   runner 'Comment.schedule_comment'
   runner 'Emote.schedule_emote'
 end
-
 # Learn more: http://github.com/javan/whenever
