@@ -107,3 +107,5 @@ gem 'acts_as_votable'
 gem "image_processing", "1.9.3"
 
 gem "slack-ruby-client", "~> 2.0"
+
+gem "whenever", "~> 1.0"
