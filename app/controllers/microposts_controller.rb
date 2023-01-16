@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
       redirect_to request.referrer
     end
   end
-  
+
   private
 
   def micropost_params
